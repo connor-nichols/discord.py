@@ -789,6 +789,23 @@ class HTTPClient:
         r = Route('PATCH', '/guilds/{guild_id}/voice-states/{user_id}', guild_id=guild_id, user_id=user_id)
         return self.request(r, json=payload)
 
+    def timeout(
+        self,
+        user_id: Snowflake,
+        guild_id: Snowflake,
+        *,
+        time: Optional[str] = None,
+        reason: Optional[str] = None,
+    ) -> Response[member.Member]: #TODO: Keep working on this to make sure it actually works
+        r = Route('PATCH', '/guilds/{guild_id}/members/{user_id}', guild_id=guild_id, user_id=user_id)
+        payload = {}
+        if time is not None:
+            payload['communication_disabled_until'] = time
+        else:
+            payload['communication_disabled_until'] = None
+
+        return self.request(r, json=payload, reason=reason)
+
     def edit_member(
         self,
         guild_id: Snowflake,

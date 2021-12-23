@@ -2643,6 +2643,28 @@ class Guild(Hashable):
         """
         await self._state.http.unban(user.id, self.id, reason=reason)
 
+    async def timeout(self, user: Snowflake, *, time: Optional[str] | Optional[None]) -> None:
+        """|coro|
+
+        Timeout a user from the guild.
+
+        The user must meet the :class:`abc.Snowflake` abc.
+
+        Parameters
+        -----------
+        user: :class:`abc.Snowflake`
+            The user to timeout.
+        time: An ISO8601 timestamp or None to remove
+
+        Raises
+        -------
+        Forbidden
+            You do not have the proper permissions to timeout.
+        HTTPException
+            Timeout failed.
+        """
+        await self._state.http.timeout(user.id, self.id, time=time)
+
     async def vanity_invite(self) -> Optional[Invite]:
         """|coro|
 
